@@ -1,24 +1,50 @@
-# README
+# Quote Editor
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Ruby on Rails 7 application built with **Hotwire** (Turbo + Stimulus) and a
+server-driven UI.  
+This project follows the Hotwire/Turbo Rails tutorial and is fully containerised
+for local development.
 
-Things you may want to cover:
 
-* Ruby version
+> https://www.hotrails.dev/turbo-rails
 
-* System dependencies
 
-* Configuration
+## Tech Stack
 
-* Database creation
+- Ruby **3.0.6**
+- Rails **7.0.x**
+- Hotwire (Turbo, Stimulus)
+- PostgreSQL
+- Node **18** (esbuild, Sass)
+- Docker & Docker Compose
 
-* Database initialization
+## Prerequisites
 
-* How to run the test suite
+You only need:
 
-* Services (job queues, cache servers, search engines, etc.)
+- Docker
+- Docker Compose
 
-* Deployment instructions
+No local Ruby, Node, or Postgres installation is required.
 
-* ...
+## Getting Started
+
+Clone the repository and start the app:
+
+```bash
+git clone <repo-url>
+cd quote-editor
+docker compose up
+```
+
+On first run, prepare the database:
+
+```shell
+docker compose run --rm web bin/rails db:prepare
+```
+
+Then visit:
+
+```shell
+http://localhost:3000
+```
