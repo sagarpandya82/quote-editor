@@ -31,8 +31,8 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/quote_editor_test
-      SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/quote_editor_test
+      SELENIUM_REMOTE_URL: http://127.0.0.1:4444/wd/hub
 
     steps:
       - uses: actions/checkout@v4
@@ -50,6 +50,12 @@ jobs:
 
       - name: Install JS deps
         run: yarn install --frozen-lockfile
+
+      - name: Check Postgres is reachable
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -d quote_editor_test -c "select 1;"
 
       - name: Prepare DB
         run: bin/rails db:prepare
