@@ -21,11 +21,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   setup do
     if ENV["GITHUB_ACTIONS"] == "true"
-      # CI: Rails runs on the runner, so point Chrome at localhost
-      Capybara.server_host = "127.0.0.1"
-      Capybara.app_host = "http://127.0.0.1:#{Capybara.server_port}"
+      # CI: Rails runs on the runner, Chrome runs in a container.
+      # Bind Rails to all interfaces, and have Chrome reach the runner via host gateway.
+      Capybara.server_host = "0.0.0.0"
+      Capybara.app_host = "http://host.docker.internal:#{Capybara.server_port}"
     else
-      # Docker Compose: expose the server and use the service name on the docker network
+      # Docker Compose: both services on the same docker network
       Capybara.server_host = "0.0.0.0"
       Capybara.app_host = "http://web:#{Capybara.server_port}"
     end
