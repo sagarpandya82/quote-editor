@@ -31,7 +31,7 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/quote_editor_test
+      DATABASE_URL_TEST: postgres://postgres:postgres@127.0.0.1:5432/quote_editor_test
       SELENIUM_REMOTE_URL: http://127.0.0.1:4444/wd/hub
 
     steps:
@@ -56,6 +56,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y postgresql-client
           PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -d quote_editor_test -c "select 1;"
+
+      - name: Show DB env vars
+        run: |
+          echo "RAILS_ENV=$RAILS_ENV"
+          echo "DATABASE_URL=$DATABASE_URL"
+          echo "DATABASE_URL_TEST=$DATABASE_URL_TEST"
 
       - name: Prepare DB
         run: bin/rails db:prepare
