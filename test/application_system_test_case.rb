@@ -20,7 +20,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :remote_chrome
 
   setup do
-    Capybara.server_host = "0.0.0.0"
-    Capybara.app_host = "http://web:#{Capybara.server_port}"
+    if ENV["GITHUB_ACTIONS"] == "true"
+      # CI: Rails runs on the runner, so point Chrome at localhost
+      Capybara.server_host = "127.0.0.1"
+      Capybara.app_host = "http://127.0.0.1:#{Capybara.server_port}"
+    else
+      # Docker Compose: expose the server and use the service name on the docker network
+      Capybara.server_host = "0.0.0.0"
+      Capybara.app_host = "http://web:#{Capybara.server_port}"
+    end
   end
 end
