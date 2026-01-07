@@ -43,6 +43,18 @@ On first run, prepare the database:
 docker compose run --rm web bin/rails db:prepare
 ```
 
+Seed data:
+
+```shell
+docker compose exec web bin/rails db:seed
+```
+
+Run tests:
+
+```shell
+docker compose exec web bin/rails test:system
+```
+
 Then visit:
 
 ```shell
